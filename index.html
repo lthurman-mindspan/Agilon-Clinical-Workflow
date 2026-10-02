@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mindspan Clinical Workflow and Re-Engagement Triggers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;600;700&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#FBF7F0; --sand:#E9DECB; --sandSoft:#F0E6D5; --ink:#201E17; --inkSoft:#5F584A; --inkMuted:#8A8270;
+  --teal:#083630; --tealLight:#1f514a; --accent:#fb4d17; --accentText:#c93a0e; --accentSoft:#fde4d9;
+  --assess:#A8431F; --monitor:#A87D2A; --treat:#5C6B3A;
+  --soft:rgba(32,30,23,.08); --softStrong:rgba(32,30,23,.14);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--cream);color:var(--ink);font-family:Figtree,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;font-size:15px;line-height:1.47;
+  -webkit-font-smoothing:antialiased;padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
+em,i{font-style:normal;font-weight:600}
+.wrap{max-width:980px;margin:0 auto;padding:44px 24px 56px}
+header{margin-bottom:6px}
+header .pill{display:inline-flex;align-items:center;gap:.5rem;padding:.375rem .75rem;border-radius:10rem;background:var(--sand);border:1px solid var(--soft);
+  font-weight:600;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--inkSoft);margin-bottom:14px}
+header .pill::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent)}
+header h1{font-family:"EB Garamond",Georgia,serif;font-weight:600;font-size:2.4rem;line-height:1.1;margin:0 0 10px;letter-spacing:-.01em;color:var(--teal)}
+header p{margin:0;color:var(--inkSoft);max-width:66ch}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 30px}
+.legend span{display:inline-flex;align-items:center;gap:8px;padding:.35rem .8rem;border-radius:10rem;background:var(--cream);border:1px solid var(--softStrong);font-size:.82rem;font-weight:500;color:var(--inkSoft)}
+.legend i{width:10px;height:10px;border-radius:50%;display:inline-block}
+
+.flow{position:relative;padding-right:86px}
+.loop{position:absolute;top:30px;bottom:30px;right:18px;width:52px;border:2px dashed var(--accent);border-left:none;border-radius:0 22px 22px 0}
+.loop::before{content:"";position:absolute;top:-7px;left:-14px;border:6px solid transparent;border-right:10px solid var(--accent)}
+.loop b{position:absolute;right:-34px;top:50%;transform:translateY(-50%) rotate(90deg);white-space:nowrap;font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accentText)}
+
+ol.steps{list-style:none;margin:0;padding:0;position:relative}
+ol.steps::before{content:"";position:absolute;left:23px;top:24px;bottom:24px;width:2px;background:var(--sand)}
+.step{position:relative;display:grid;grid-template-columns:48px 1fr;gap:16px;margin-bottom:14px}
+.num{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-family:"EB Garamond",Georgia,serif;font-weight:700;font-size:1.35rem;color:var(--cream);background:var(--c);
+  position:relative;z-index:1;box-shadow:0 0 0 5px var(--cream)}
+.card{background:var(--cream);border:1px solid var(--soft);border-radius:14px;padding:16px 20px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 1px 2px rgba(32,30,23,.05),0 6px 18px -10px rgba(32,30,23,.1)}
+.card h2{font-family:"EB Garamond",Georgia,serif;font-size:1.35rem;line-height:1.2;margin:0 0 4px;font-weight:600;color:var(--ink)}
+.who{display:inline-block;font-size:.8rem;font-weight:600;color:var(--c);margin:0 0 8px}
+.card p{margin:0 0 6px;max-width:72ch;color:var(--inkSoft)}
+.card p.who{color:var(--c)}
+.cpt{display:inline-flex;margin-top:6px;font-size:.78rem;font-weight:600;color:var(--teal);background:var(--sandSoft);border:1px solid var(--soft);border-radius:10rem;padding:.25rem .7rem}
+.step.cond .card{background:transparent;border:1.5px dashed var(--softStrong);box-shadow:none}
+.pcp{--c:var(--teal)} .mindy{--c:var(--accentText)} .spec{--c:var(--assess)} .test{--c:var(--monitor)}
+.mindy .num{background:var(--accent)}
+
+.triggers{margin-top:34px;background:var(--sand);border:1px solid var(--soft);border-radius:18px;padding:24px 24px 20px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 1px 2px rgba(32,30,23,.04),0 8px 24px -12px rgba(32,30,23,.08)}
+.triggers h2{font-family:"EB Garamond",Georgia,serif;margin:0 0 4px;font-size:1.6rem;font-weight:600;color:var(--teal)}
+.triggers > p{margin:0 0 16px;color:var(--inkSoft);max-width:70ch}
+.tgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.t{background:var(--cream);border:1px solid var(--soft);border-radius:12px;padding:14px 16px}
+.t strong{display:block;font-size:.95rem;margin-bottom:3px;color:var(--ink)}
+.t span{font-size:.85rem;color:var(--inkSoft)}
+.auth{margin:16px 0 0;font-size:.88rem;color:var(--ink);border-top:1px solid var(--softStrong);padding-top:14px}
+.auth b{color:var(--teal)}
+footer{margin-top:26px;font-size:.8rem;color:var(--inkMuted)}
+
+@media (max-width:760px){ .flow{padding-right:0} .loop{display:none} .tgrid{grid-template-columns:1fr 1fr} header h1{font-size:1.9rem} }
+@media (max-width:460px){ .tgrid{grid-template-columns:1fr} .step{grid-template-columns:40px 1fr;gap:12px} .num{width:40px;height:40px;font-size:1.15rem} ol.steps::before{left:19px} }
+@media print{ .card,.triggers{break-inside:avoid} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="pill">Mindspan for agilon</span>
+    <h1>Clinical workflow for agilon PCP partners</h1>
+    <p>Six steps from PCP referral to care plan delivery, with the triggers that bring a member back to Mindspan. Source: Agilon proposal, Clinical Workflow and Triggers for PCP Re-Engagement.</p>
+  </header>
+
+  <div class="legend" aria-label="Who performs each step">
+    <span><i style="background:var(--teal)"></i>PCP practice</span>
+    <span><i style="background:var(--accent)"></i>Mindy, virtual clinician</span>
+    <span><i style="background:var(--assess)"></i>Mindspan specialist</span>
+    <span><i style="background:var(--monitor)"></i>Mindspan testing</span>
+  </div>
+
+  <div class="flow">
+    <div class="loop" aria-hidden="true"><b>Re-engagement and annual cycle</b></div>
+    <ol class="steps">
+      <li class="step pcp">
+        <div class="num">1</div>
+        <div class="card">
+          <h2>Cognitive concern identified and referred</h2>
+          <p class="who">PCP, at the Annual Wellness Visit</p>
+          <p>The PCP identifies cognitive risk and refers to Mindspan. No complex intake is required from the practice.</p>
+        </div>
+      </li>
+      <li class="step mindy">
+        <div class="num">2</div>
+        <div class="card">
+          <h2>Pre-visit MoCA</h2>
+          <p class="who">Mindy, completed by the member at home</p>
+          <p>Mindy delivers the MoCA through a guided conversation and produces a structured cognitive risk score that guides the visit, saving about 30 minutes in the office.</p>
+          <span class="cpt">No charge to the plan or member</span>
+        </div>
+      </li>
+      <li class="step spec">
+        <div class="num">3</div>
+        <div class="card">
+          <h2>Initial specialist assessment</h2>
+          <p class="who">Neurologist or APP, in person</p>
+          <p>Focused exam supported by the Mindy report. DSM-5 differential diagnosis with etiology and staging. The specialist decides whether testing is needed.</p>
+          <span class="cpt">CPT 99205</span>
+        </div>
+      </li>
+      <li class="step test cond">
+        <div class="num">4</div>
+        <div class="card">
+          <h2>Neuropsychological testing, when indicated</h2>
+          <p class="who">Mindspan, virtual or in person</p>
+          <p>One round of formal testing for atypical presentations, mixed etiology, mild or unclear impairment, or to separate dementia from depression or delirium. Not every member needs this step.</p>
+          <span class="cpt">CPT 96132/96133, 96136/96137 (if in scope), 96138/96139</span>
+        </div>
+      </li>
+      <li class="step spec">
+        <div class="num">5</div>
+        <div class="card">
+          <h2>Follow-up visit and confirmed diagnosis</h2>
+          <p class="who">Neurologist, 3 to 4 weeks after the initial visit</p>
+          <p>Diagnosis confirmed, etiology established, and coded to HCC 125, 126 or 127. Cognitive assessment and care planning completed when indicated.</p>
+          <span class="cpt">CPT 99214/99215, plus 99483 when indicated</span>
+        </div>
+      </li>
+      <li class="step pcp">
+        <div class="num">6</div>
+        <div class="card">
+          <h2>Care plan delivered to the PCP</h2>
+          <p class="who">PCP co-signs and becomes the longitudinal home</p>
+          <p>Includes HCC documentation and dual coding, medication management, safety planning and caregiver guidance. Mindspan stays available for consultation, and the cycle repeats annually.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <section class="triggers" aria-labelledby="trig">
+    <h2 id="trig">Triggers for PCP re-engagement</h2>
+    <p>Between annual cycles, the PCP re-refers the member to Mindspan when any of these occur.</p>
+    <div class="tgrid">
+      <div class="t"><strong>Caregiver-reported decline</strong><span>New or worsening changes in memory, behavior or function</span></div>
+      <div class="t"><strong>Acute utilization</strong><span>An ED visit or hospitalization</span></div>
+      <div class="t"><strong>Care environment change</strong><span>A move, a new living setting or a change in caregiving capacity</span></div>
+      <div class="t"><strong>PCP-observed change</strong><span>Changes noted during routine primary care</span></div>
+    </div>
+    <p class="auth"><b>agilon authorization:</b> Steps 2 to 6 are covered by one approved diagnostic bundle per member. Re-engagement visits and anything beyond the bundle route to agilon for approval.</p>
+  </section>
+
+  <footer>Mindspan, draft for internal review. Not for distribution without approval.</footer>
+</div>
+</body>
+</html>
